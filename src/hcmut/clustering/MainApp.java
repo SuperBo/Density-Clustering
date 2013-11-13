@@ -1,10 +1,4 @@
-package hcmut.clustering;/**
- * Created with IntelliJ IDEA.
- * User: Super Bo
- * Date: 11/12/13
- * Time: 4:53 PM
- * To change this template use File | Settings | File Templates.
- */
+package hcmut.clustering;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -33,6 +27,7 @@ public class MainApp extends Application {
             Scene scene = new Scene(rootLayout);
             primaryStage.setTitle("Clustering Graph Info");
             primaryStage.setScene(scene);
+
             showGraphicsContext();
             primaryStage.show();
         }

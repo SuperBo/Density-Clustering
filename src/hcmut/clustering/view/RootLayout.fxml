@@ -5,10 +5,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="500.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
   <center>
     <Region prefHeight="200.0" prefWidth="200.0" />
   </center>
+  <left>
+    <Pane prefHeight="576.0" prefWidth="200.00009999999747" />
+  </left>
   <top>
     <MenuBar>
       <menus>
