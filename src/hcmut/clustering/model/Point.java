@@ -3,9 +3,6 @@ import weka.core.Instance;
 
 public class Point extends Instance{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	private boolean isVisited;
