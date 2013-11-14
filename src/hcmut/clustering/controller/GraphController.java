@@ -1,4 +1,4 @@
-package hcmut.clustering;
+package hcmut.clustering.controller;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,11 +20,11 @@ public class GraphController {
     private int size;
     private int maxValue;
 
-    GraphController(GraphicsContext gc) {
+    public GraphController(GraphicsContext gc) {
         this.gc = gc;
     }
 
-    GraphController(GraphicsContext gc, int size, int maxValue) {
+    public GraphController(GraphicsContext gc, int size, int maxValue) {
         this(gc);
         this.size = size;
         this.maxValue = maxValue;
