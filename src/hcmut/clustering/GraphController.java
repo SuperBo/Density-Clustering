@@ -8,15 +8,26 @@ package hcmut.clustering;
  * To change this template use File | Settings | File Templates.
  */
 
+import hcmut.clustering.model.Points;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
 import javafx.scene.paint.Color;
+import hcmut.clustering.model.Point;
+import hcmut.clustering.model.Points;
 
 public class GraphController {
     private GraphicsContext gc;
+    private int size;
+    private int maxValue;
 
     GraphController(GraphicsContext gc) {
         this.gc = gc;
+    }
+
+    GraphController(GraphicsContext gc, int size, int maxValue) {
+        this(gc);
+        this.size = size;
+        this.maxValue = maxValue;
     }
 
     public void draw() {
@@ -24,7 +35,7 @@ public class GraphController {
         gc.setStroke(Color.BLUE);
         gc.setLineWidth(5);
         gc.strokeLine(40, 10, 10, 40);
-        gc.fillOval(10, 60, 30, 30);
+        gc.fillOval(15, 15, 30, 30);
         gc.strokeOval(60, 60, 30, 30);
         gc.fillRoundRect(110, 60, 30, 30, 10, 10);
         gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
@@ -42,4 +53,24 @@ public class GraphController {
                 new double[]{210, 210, 240, 240}, 4);
     }
 
+    private void drawPoint(int x, int y) {
+        gc.fillOval(x, y, 1, 1);
+    }
+
+    public void draw(Point p) {
+        gc.setFill(Color.BLACK);
+        int x = ((int) p.getAttribute(0) * size / maxValue);
+        int y = size - ((int) p.getAttribute(1) * size / maxValue);
+        this.drawPoint(x, y);
+    }
+
+    public void draw(Points points, Color color) {
+        gc.setFill(color);
+        int x, y;
+        for (Point p : points) {
+            x = (int) p.getAttribute(0) * size / maxValue;
+            y = size - (int) p.getAttribute(1) * size /maxValue;
+            this.drawPoint(x, y);
+        }
+    }
 }

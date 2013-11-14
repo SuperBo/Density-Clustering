@@ -1,10 +1,11 @@
 package hcmut.clustering.model;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import weka.core.Instances;
 
 
-public class Points{
+public class Points implements Iterable<Point>{
 	
 	private ArrayList<Point> pointList;
 
@@ -56,4 +57,9 @@ public class Points{
 		}
 		return region;
 	}
+
+    @Override
+    public Iterator<Point> iterator() {
+        return pointList.iterator();
+    }
 }

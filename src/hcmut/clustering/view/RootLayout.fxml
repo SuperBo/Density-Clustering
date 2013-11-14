@@ -5,7 +5,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="hcmut.clustering.MainApp">
   <center>
     <Region prefHeight="200.0" prefWidth="200.0" />
   </center>
@@ -17,6 +17,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
+            <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open..." />
             <MenuItem mnemonicParsing="false" text="Close" />
           </items>
         </Menu>
