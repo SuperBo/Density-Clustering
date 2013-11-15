@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="hcmut.clustering.MainApp">
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="hcmut.clustering.controller.MainController">
   <bottom>
     <ToolBar>
       <items>
@@ -43,7 +41,7 @@
         </HBox>
         <Label font="$x1" text="Size of dataset">
           <VBox.margin>
-            <Insets top="10.0" fx:id="x15" />
+            <Insets top="10.0" fx:id="x14" />
           </VBox.margin>
         </Label>
         <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">

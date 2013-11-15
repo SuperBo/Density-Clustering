@@ -1,18 +1,23 @@
 package hcmut.clustering.controller;
 
-import hcmut.clustering.model.*;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.shape.ArcType;
-import javafx.scene.paint.Color;
+import hcmut.clustering.model.Cluster;
+import hcmut.clustering.model.Clusters;
+import hcmut.clustering.model.Point;
 import hcmut.clustering.model.Points;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
 
 public class GraphController {
+    private Color[] colorArray;
     private GraphicsContext gc;
     private int size;
     private int maxValue;
 
     public GraphController(GraphicsContext gc) {
         this.gc = gc;
+        colorArray = new Color[] {Color.RED, Color.DARKORANGE, Color.LIGHTYELLOW, Color.DARKGREEN,
+                                  Color.DEEPSKYBLUE, Color.DARKVIOLET, Color.AQUA, Color.CHOCOLATE, Color.BROWN};
     }
 
     public GraphController(GraphicsContext gc, int size, int maxValue) {
@@ -25,7 +30,7 @@ public class GraphController {
         this.maxValue = max;
     }
 
-    public void draw() {
+    public void drawTest() {
         gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLUE);
         gc.setLineWidth(5);
@@ -49,7 +54,7 @@ public class GraphController {
     }
 
     private void drawPoint(int x, int y) {
-        gc.fillOval(x, y, 1, 1);
+        gc.fillOval(x, y, 5, 5);
     }
 
     public void draw(Point p) {
@@ -75,9 +80,14 @@ public class GraphController {
     }
 
     public void drawCluster(Clusters clusters) {
-        Color[] colors = new Color[7];
+        int i = 0;
+        Color c;
         for (Cluster cluster : clusters) {
-            this.draw(cluster, Color.RED);
+            c = colorArray[i];
+            this.draw(cluster, c);
+            i++;
+            if (i == colorArray.length)
+                i =0;
         }
     }
 }
