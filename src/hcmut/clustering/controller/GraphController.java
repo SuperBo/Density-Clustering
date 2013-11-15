@@ -21,6 +21,10 @@ public class GraphController {
         this.maxValue = maxValue;
     }
 
+    public void setMaxValue(int max) {
+        this.maxValue = max;
+    }
+
     public void draw() {
         gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLUE);
@@ -65,7 +69,15 @@ public class GraphController {
         }
     }
 
-    public void drawCluster(Clusters clusters) {
+    public void draw(Cluster cluster, Color color) {
+        Points p = cluster.getPoints();
+        this.draw(p, color);
+    }
 
+    public void drawCluster(Clusters clusters) {
+        Color[] colors = new Color[7];
+        for (Cluster cluster : clusters) {
+            this.draw(cluster, Color.RED);
+        }
     }
 }

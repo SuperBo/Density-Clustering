@@ -1,8 +1,9 @@
 package hcmut.clustering.model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Clusters {
+public class Clusters implements Iterable<Cluster> {
 
     /* All clusters */
 	private ArrayList<Cluster> clusters;
@@ -38,4 +39,9 @@ public class Clusters {
 	public void addCluster(Cluster cluster) {
         clusters.add(cluster);
 	}
+
+    @Override
+    public Iterator<Cluster> iterator() {
+        return clusters.iterator();
+    }
 }
