@@ -1,13 +1,5 @@
 package hcmut.clustering.controller;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Super
- * Date: 11/12/13
- * Time: 5:00 PM
- * To change this template use File | Settings | File Templates.
- */
-
 import hcmut.clustering.model.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
@@ -68,7 +60,7 @@ public class GraphController {
         int x, y;
         for (Point p : points) {
             x = (int) p.getAttribute(0) * size / maxValue;
-            y = size - (int) p.getAttribute(1) * size /maxValue;
+            y = size - (int) p.getAttribute(1) * size / maxValue;
             this.drawPoint(x, y);
         }
     }

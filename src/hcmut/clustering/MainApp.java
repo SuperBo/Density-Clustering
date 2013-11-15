@@ -2,6 +2,7 @@ package hcmut.clustering;
 
 import hcmut.clustering.controller.GraphController;
 import hcmut.clustering.engine.DBSCAN;
+import hcmut.clustering.engine.OPTICS;
 import hcmut.clustering.model.Points;
 import hcmut.clustering.utility.ReadData;
 import javafx.application.Application;
@@ -64,9 +65,6 @@ public class MainApp extends Application {
             Scene scene = new Scene(rootLayout);
             primaryStage.setTitle("Clustering Graph Info");
             primaryStage.setScene(scene);
-
-            showGraphicsContext();
-
             primaryStage.show();
         }
         catch (IOException e) {
@@ -74,14 +72,9 @@ public class MainApp extends Application {
         }
     }
 
-    private void showGraphicsContext() {
-        Canvas canvas = new Canvas(500,500);
-        gc = canvas.getGraphicsContext2D();
-        GraphController graphCtrl = new GraphController(gc, 500, 10000);
-        graphCtrl.draw();
-        rootLayout.setCenter(canvas);
-    }
-
+    /**
+     * Click event handler for Open file button
+     */
     public void btnOpenFileClicked() {
         try {
             FileChooser fileChooser = new FileChooser();
@@ -102,22 +95,35 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Click event handler for Confirm Data Set button
+     */
     public void btnConfirmDataSetClicked() {
         //TODO: Draw all points of data set
+
         btnConfirmAlgorithm.setDisable(false);
         btnConfirmDataSet.setDisable(true);
     }
 
+    /**
+     * Click event handler for Confirm Algorithm button
+     */
     public void btnConfirmAlgorithmClicked() {
         btnConfirmParameters.setDisable(false);
         btnConfirmAlgorithm.setDisable(true);
     }
 
+    /**
+     * Click event handler for Confirm Parameters button
+     */
     public void btnConfirmParametersClicked() {
         btnConstructClusters.setDisable(false);
         btnConfirmParameters.setDisable(true);
     }
 
+    /**
+     * Click event handler for Construct Clusters button
+     */
     public void btnConstructClustersClicked() {
         try {
             constructCluster(ReadData.readData(inputFilePath.getText()), Double.parseDouble(inputEps.getText()),
@@ -128,23 +134,36 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Click event handler for Start Over button
+     */
     public void btnStartOverClicked() {
         inputFilePath.setText("");
         inputMinPts.setText("");
         inputEps.setText("");
         chbAlgorithm.getSelectionModel().clearSelection();
-        btnConfirmDataSet.setDisable(false);
+        btnConfirmDataSet.setDisable(true);
         btnConfirmAlgorithm.setDisable(true);
         btnConfirmParameters.setDisable(true);
         btnConstructClusters.setDisable(true);
     }
 
-    public void constructCluster(Points points, double eps, int minPts, int algorithm) {
+    /**
+     * Construct clusters method
+     * @param points
+     * @param eps
+     * @param minPts
+     * @param algorithm
+     */
+    private void constructCluster(Points points, double eps, int minPts, int algorithm) {
         if (algorithm == DBSCAN_INDEX) {
             DBSCAN dbscan = new DBSCAN(points, eps, minPts);
             dbscan.constructCluster();
-
             //TODO Draw Clusters
+        }
+        else if (algorithm == OPTICS_INDEX) {
+            OPTICS optics = new OPTICS(points, eps, minPts);
+            optics.constructClusters();
         }
     }
 }

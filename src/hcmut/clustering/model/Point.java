@@ -8,6 +8,8 @@ public class Point extends Instance {
     private boolean isNoise;
 	private boolean isVisited;
 	private boolean isClustered;
+
+    private double reachDist = 0;
 	
 	public Point(Instance instance) {
 		super(instance);
@@ -35,6 +37,14 @@ public class Point extends Instance {
 	public boolean isClustered() {
 		return isClustered;
 	}
+
+    public double getReachDist() {
+        return reachDist;
+    }
+
+    public void setReachDist(double reachDist) {
+        this.reachDist = reachDist;
+    }
 
 	public void setClustered(boolean isClustered) {
 		this.isClustered = isClustered;

@@ -43,7 +43,7 @@
         </HBox>
         <Label font="$x1" text="Size of dataset">
           <VBox.margin>
-            <Insets top="10.0" fx:id="x3" />
+            <Insets top="10.0" fx:id="x15" />
           </VBox.margin>
         </Label>
         <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">
@@ -81,7 +81,11 @@
             <Insets top="5.0" />
           </VBox.margin>
         </ChoiceBox>
-        <Button id="btnConfirmDataset" fx:id="btnConfirmAlgorithm" cancelButton="false" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#btnConfirmAlgorithmClicked" text="Confirm" wrapText="false" VBox.margin="$x2" />
+        <Button id="btnConfirmDataset" fx:id="btnConfirmAlgorithm" cancelButton="false" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#btnConfirmAlgorithmClicked" text="Confirm" wrapText="false">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x3" />
+          </VBox.margin>
+        </Button>
         <Separator prefWidth="200.0">
           <VBox.margin>
             <Insets top="10.0" fx:id="x7" />
@@ -120,7 +124,11 @@
             <Insets top="10.0" fx:id="x11" />
           </VBox.margin>
         </Separator>
-        <Label font="$x1" text="Control" />
+        <Label font="$x1" text="Control">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x15" />
+          </VBox.margin>
+        </Label>
         <VBox id="VBox" alignment="CENTER" spacing="5.0">
           <children>
             <Button fx:id="btnConstructClusters" disable="true" mnemonicParsing="false" onMouseClicked="#btnConstructClustersClicked" text="Construct Clusters" />
