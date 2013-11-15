@@ -28,6 +28,7 @@ public class MainApp extends Application {
     private BorderPane rootLayout;
     private GraphicsContext gc;
     private Stage primaryStage;
+    private GraphController graphCtrl;
 
     private Points points;
 
@@ -75,9 +76,10 @@ public class MainApp extends Application {
     }
 
     private void showGraphicsContext() {
+
         Canvas canvas = new Canvas(500,500);
         gc = canvas.getGraphicsContext2D();
-        GraphController graphCtrl = new GraphController(gc, 500, 10000);
+        this.graphCtrl = new GraphController(gc, 500, 10000);
         graphCtrl.draw();
         rootLayout.setCenter(canvas);
     }
@@ -143,8 +145,9 @@ public class MainApp extends Application {
         if (algorithm == DBSCAN_INDEX) {
             DBSCAN dbscan = new DBSCAN(points, eps, minPts);
             dbscan.constructCluster();
-
+            dbscan.getClusters();
             //TODO Draw Clusters
+            this.graphCtrl.drawCluster(dbscan.getClusters());
         }
     }
 }
