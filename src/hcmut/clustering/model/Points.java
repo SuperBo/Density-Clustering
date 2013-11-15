@@ -4,62 +4,81 @@ import java.util.Iterator;
 
 import weka.core.Instances;
 
+public class Points implements Iterable<Point> {
 
-public class Points implements Iterable<Point>{
-	
-	private ArrayList<Point> pointList;
+    /** Points list **/
+	private ArrayList<Point> points;
 
+    /** Default Constructor **/
 	public Points() {
-		this.pointList = new ArrayList<Point>();
+		this.points = new ArrayList<Point>();
 	}
-	
+
+    /**
+     * Constructor with data
+     * @param data
+     */
 	public Points(Instances data) {
-		this.pointList = new ArrayList<Point>();
+		this.points = new ArrayList<Point>();
 		
 		for (int i = 0; i < data.numInstances(); i++)
-			this.pointList.add(new Point(data.instance(i)));
+			this.points.add(new Point(data.instance(i)));
 	}
-	
-	public Point getPointAtIndex(int index) {
-		return this.pointList.get(index);
+
+    /**
+     * Get point at index
+     * @param index
+     * @return point
+     */
+	public Point getPoint(int index) {
+		return this.points.get(index);
 	}
-	
-	public ArrayList<Point> getPointList() {
-		return this.pointList;
+
+    /**
+     * Get all points
+     * @return points
+     */
+	public ArrayList<Point> getAllPoints() {
+		return this.points;
 	}
-	
+
+    /**
+     * Get number of points belong to this collection
+     * @return number of points
+     */
+    public int size() {
+        return this.points.size();
+    }
+
+    /**
+     * Add point to this collection
+     * @param point
+     */
 	public void add(Point point) {
-		this.pointList.add(point);
+		this.points.add(point);
 	}
-	
+
+    /**
+     * Add another collection of points to this collection
+     * @param points
+     */
 	public void addAll(Points points) {
-		for (int i = 0; i < points.getNumberOfPoints(); i++) {
-			Point temp = points.getPointAtIndex(i);
-			if (!this.pointList.contains(temp))
-				this.pointList.add(temp);
+		for (int i = 0; i < points.size(); i++) {
+			Point temp = points.getPoint(i);
+			if (!this.points.contains(temp))
+				this.points.add(temp);
 		}
 	}
-	
-	public int getNumberOfPoints() {
-		return this.pointList.size();
-	}
-	
+
+    /**
+     * Clear this collection
+     */
 	public void clear() {
-		this.pointList.clear();
-	}
-	
-	public static Points regionQuerry(Point centroid, double eps, Points data) {
-		Points region = new Points();
-		for (int i = 0; i < data.getNumberOfPoints(); i++) {
-			Point point = data.getPointAtIndex(i);
-			if (centroid.distanceToAnotherPoint(point) <= eps)
-				region.add(point);
-		}
-		return region;
+		this.points.clear();
 	}
 
     @Override
     public Iterator<Point> iterator() {
-        return pointList.iterator();
+        return points.iterator();
     }
 }

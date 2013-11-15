@@ -8,11 +8,10 @@ package hcmut.clustering.controller;
  * To change this template use File | Settings | File Templates.
  */
 
-import hcmut.clustering.model.Points;
+import hcmut.clustering.model.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.ArcType;
 import javafx.scene.paint.Color;
-import hcmut.clustering.model.Point;
 import hcmut.clustering.model.Points;
 
 public class GraphController {
@@ -72,5 +71,9 @@ public class GraphController {
             y = size - (int) p.getAttribute(1) * size /maxValue;
             this.drawPoint(x, y);
         }
+    }
+
+    public void drawCluster(Clusters clusters) {
+
     }
 }

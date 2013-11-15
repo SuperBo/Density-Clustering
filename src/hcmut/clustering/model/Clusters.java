@@ -3,21 +3,39 @@ package hcmut.clustering.model;
 import java.util.ArrayList;
 
 public class Clusters {
-	private ArrayList<Cluster> clusterList;
-	
+
+    /* All clusters */
+	private ArrayList<Cluster> clusters;
+
+    /**
+     * Clusters Constructor
+     */
 	public Clusters() {
-		clusterList = new ArrayList<Cluster>();
+        clusters = new ArrayList<Cluster>();
 	}
-	
-	public int getNumberOfCluster() {
-		return clusterList.size();
+
+    /**
+     * Get number of clusters
+     * @return number of clusters
+     */
+	public int size() {
+		return clusters.size();
 	}
-	
-	public Cluster getClusterAtIndex(int index) {
-		return clusterList.get(index);
+
+    /**
+     * Get cluster by index
+     * @param index
+     * @return cluster at index
+     */
+	public Cluster getCluster(int index) {
+		return clusters.get(index);
 	}
-	
+
+    /**
+     * Add cluster
+     * @param cluster
+     */
 	public void addCluster(Cluster cluster) {
-		clusterList.add(cluster);
+        clusters.add(cluster);
 	}
 }

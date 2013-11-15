@@ -1,49 +1,66 @@
 package hcmut.clustering.model;
 
 public class Cluster {
-	private Point centroid;
-	private Points elementList;
-	
-	public Cluster(Point centroid, Points elementList) {
-		this.centroid = centroid;
-		this.elementList = new Points();
+
+    /* All points belonged to this cluster*/
+    private Points points;
+
+    /**
+     * Cluster Constructor
+     * @param neighbors
+     */
+	public Cluster(Points neighbors) {
+		this.points = new Points();
 		
-		for (int i = 0; i < elementList.getNumberOfPoints(); i++) {
-			Point temp = elementList.getPointAtIndex(i);
-			this.elementList.add(temp);
-			temp.setClustered(true);
+		for (int i = 0; i < neighbors.size(); i++) {
+            this.add(neighbors.getPoint(i));
 		}
 	}
-	
-	public Object getCentroid() {
-		return this.centroid;
+
+    /**
+     * Get points belonged to this cluster
+     * @return points
+     */
+    public Points getPoints() {
+        return points;
+    }
+
+    /**
+     * Get size of this cluster
+     * @return size
+     */
+	public int size() {
+		return this.points.size();
 	}
-	
-	public int getNumberOfElements() {
-		return this.elementList.getNumberOfPoints();
-	}
-	
+
+    /**
+     * Add a point to this cluster
+     * @param point
+     */
 	public void add(Point point) {
-		this.elementList.add(point);
+		this.points.add(point);
 		point.setClustered(true);
 	}
-	
-	public static void expandCluster(Point point, Points neighborPts, Cluster cluster, double eps, int minPts, Points data) {
-		
-		for (int i = 0; i < neighborPts.getNumberOfPoints(); i++) {
-			Point tempPoint = neighborPts.getPointAtIndex(i);
+
+    /**
+     * Expand cluster
+     * @param eps
+     * @param minPts
+     * @param points
+     */
+	public void expandCluster(double eps, int minPts, Points points) {
+		for (int i = 0; i < this.points.size(); i++) {
+			Point point = this.points.getPoint(i);
 			
-			if (!tempPoint.isVisited()) {
-				tempPoint.setVisited(true);
-				
-				Points tempNeighborPts = Points.regionQuerry(tempPoint, eps, data);
-				
-				if (tempNeighborPts.getNumberOfPoints() >= minPts)
-					neighborPts.addAll(tempNeighborPts);
+			if (!point.isVisited()) {
+                point.setVisited(true);
+				Points localNeighbors = point.regionQuery(eps, points);
+				if (localNeighbors.size() >= minPts)
+                    this.points.addAll(localNeighbors);
 			}
 			
-			if (!tempPoint.isClustered())
-				cluster.add(tempPoint);
+			if (!point.isClustered())
+				this.add(point);
 		}
 	}
 }

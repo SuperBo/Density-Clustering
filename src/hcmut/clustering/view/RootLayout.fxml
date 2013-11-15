@@ -1,23 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="hcmut.clustering.MainApp">
-  <center>
-    <Region prefHeight="200.0" prefWidth="200.0" />
-  </center>
+  <bottom>
+    <ToolBar>
+      <items>
+        <Button cancelButton="false" defaultButton="false" disable="false" focusTraversable="true" mnemonicParsing="false" text="Status" visible="true" />
+      </items>
+    </ToolBar>
+  </bottom>
   <left>
-    <Pane prefHeight="576.0" prefWidth="200.00009999999747" />
+    <VBox alignment="TOP_LEFT" prefHeight="576.0" prefWidth="200.0" style="-fx-background-color: lightgrey;&#10;">
+      <children>
+        <Label text="Choose dataset">
+          <font>
+            <Font name="System Bold" size="12.0" fx:id="x1" />
+          </font>
+          <VBox.margin>
+            <Insets bottom="5.0" />
+          </VBox.margin>
+        </Label>
+        <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="200.0">
+          <children>
+            <TextField id="fieldFilePath" fx:id="inputFilePath" alignment="CENTER_RIGHT" prefWidth="125.0">
+              <HBox.margin>
+                <Insets />
+              </HBox.margin>
+            </TextField>
+            <Button cancelButton="false" defaultButton="false" mnemonicParsing="false" onMouseClicked="#btnOpenFileClicked" text="..." underline="false">
+              <HBox.margin>
+                <Insets left="5.0" />
+              </HBox.margin>
+            </Button>
+          </children>
+        </HBox>
+        <Label font="$x1" text="Size of dataset">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x3" />
+          </VBox.margin>
+        </Label>
+        <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0">
+          <children>
+            <TextField fx:id="numPoints" alignment="CENTER_RIGHT" disable="false" editable="false" prefWidth="125.0" />
+            <Label text="Points" />
+          </children>
+          <padding>
+            <Insets top="5.0" />
+          </padding>
+        </HBox>
+        <Button id="btnConfirmDataset" fx:id="btnConfirmDataSet" cancelButton="false" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#btnConfirmDataSetClicked" text="Confirm" wrapText="false">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x4" />
+          </VBox.margin>
+        </Button>
+        <Separator prefWidth="200.0">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x5" />
+          </VBox.margin>
+        </Separator>
+        <Label font="$x1" text="Choose algorithm">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x6" />
+          </VBox.margin>
+        </Label>
+        <ChoiceBox id="chAlgorithm" fx:id="chbAlgorithm" prefWidth="180.0" VBox.vgrow="ALWAYS">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+              <String fx:value="DBSCAN" />
+              <String fx:value="OPTICS" />
+            </FXCollections>
+          </items>
+          <VBox.margin>
+            <Insets top="5.0" />
+          </VBox.margin>
+        </ChoiceBox>
+        <Button id="btnConfirmDataset" fx:id="btnConfirmAlgorithm" cancelButton="false" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#btnConfirmAlgorithmClicked" text="Confirm" wrapText="false" VBox.margin="$x2" />
+        <Separator prefWidth="200.0">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x7" />
+          </VBox.margin>
+        </Separator>
+        <Label font="$x1" text="Set parameters">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x8" />
+          </VBox.margin>
+        </Label>
+        <HBox id="HBox" alignment="CENTER_RIGHT" spacing="5.0">
+          <children>
+            <Label text="eps" />
+            <TextField fx:id="inputEps" prefWidth="117.0" />
+          </children>
+          <padding>
+            <Insets top="10.0" fx:id="x9" />
+          </padding>
+        </HBox>
+        <HBox id="HBox" alignment="CENTER_RIGHT" spacing="5.0">
+          <children>
+            <Label text="minPts" />
+            <TextField fx:id="inputMinPts" prefWidth="117.0" />
+          </children>
+          <padding>
+            <Insets top="5.0" />
+          </padding>
+        </HBox>
+        <Button id="btnConfirmDataset" fx:id="btnConfirmParameters" cancelButton="false" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#btnConfirmParametersClicked" text="Confirm" wrapText="false">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x10" />
+          </VBox.margin>
+        </Button>
+        <Separator prefWidth="200.0">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x11" />
+          </VBox.margin>
+        </Separator>
+        <Label font="$x1" text="Control" />
+        <VBox id="VBox" alignment="CENTER" spacing="5.0">
+          <children>
+            <Button fx:id="btnConstructClusters" disable="true" mnemonicParsing="false" onMouseClicked="#btnConstructClustersClicked" text="Construct Clusters" />
+            <Button mnemonicParsing="false" onMouseClicked="#btnStartOverClicked" text="Start Over">
+              <VBox.margin>
+                <Insets top="10.0" fx:id="x12" />
+              </VBox.margin>
+            </Button>
+          </children>
+          <padding>
+            <Insets top="10.0" fx:id="x13" />
+          </padding>
+        </VBox>
+        <Separator prefWidth="200.0">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x2" />
+          </VBox.margin>
+        </Separator>
+      </children>
+      <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+      </padding>
+    </VBox>
   </left>
   <top>
     <MenuBar>
       <menus>
         <Menu mnemonicParsing="false" text="File">
           <items>
-            <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open..." />
+            <MenuItem mnemonicParsing="false" onAction="#btnOpenFileClicked" text="Open..." />
             <MenuItem mnemonicParsing="false" text="Close" />
           </items>
         </Menu>
