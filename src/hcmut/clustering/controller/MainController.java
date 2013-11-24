@@ -124,15 +124,21 @@ public class MainController {
      * Click event handler for Start Over button
      */
     public void btnStartOverClicked() {
+        //Clear all fields
         this.inputFilePath.setText(null);
         this.inputMinPts.setText(null);
         this.inputEps.setText(null);
         this.numPoints.setText(null);
         this.chbAlgorithm.getSelectionModel().clearSelection();
+
+        //Reset buttons
         this.btnConfirmDataSet.setDisable(false);
         this.btnConfirmAlgorithm.setDisable(true);
         this.btnConfirmParameters.setDisable(true);
         this.btnConstructClusters.setDisable(true);
+
+        //Clear drawing section
+        this.graphCtrl.clearScreen();
     }
 
     /**
