@@ -12,8 +12,7 @@ public class GraphController {
     private GraphicsContext graphicsContext;
     private int size;
 
-    //TODO: cai nay co can thiet phai la int ko? t cho double dc hem?
-    private int maxValue;
+    private double maxValue;
 
     public GraphController(GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
@@ -27,8 +26,9 @@ public class GraphController {
         this.maxValue = maxValue;
     }
 
-    public void setMaxValue(int max) {
-        this.maxValue = max;
+    public void setMaxValue(double max) {
+        if (max > 0)
+            this.maxValue = max;
     }
 
     /**
@@ -103,6 +103,6 @@ public class GraphController {
      * Clear drawing section
      */
     public void clearScreen() {
-    // TODO: clear drawing section
+        graphicsContext.clearRect(0, 0, size, size);
     }
 }

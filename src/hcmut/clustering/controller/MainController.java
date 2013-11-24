@@ -69,7 +69,7 @@ public class MainController {
                 this.inputFilePath.setText(file.getPath());
                 this.points = ReadData.readData(file.getPath());
 
-                //TODO: m coi lai cai cho chuyen tu max value sang toa do diem, t phai set the nao thi may diem do moi nam giua?
+                //TODO: tai cai tap du lieu no le ra diem 124,7 may sua lai thanh 12,7 thi no se nam giua :v?
                 this.graphCtrl.setMaxValue((int) this.points.getMaxCoordinateValue());
 
                 this.numPoints.setText(Integer.toString(this.points.size()));
