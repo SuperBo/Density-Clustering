@@ -17,7 +17,7 @@ public class GraphController {
 
     public GraphController(GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
-        colorArray = new Color[] {Color.RED, Color.DARKORANGE, Color.LIGHTYELLOW, Color.DARKGREEN,
+        colorArray = new Color[] {Color.RED, Color.DARKORANGE, Color.DARKGOLDENROD, Color.DARKGREEN,
                                   Color.DEEPSKYBLUE, Color.DARKVIOLET, Color.AQUA, Color.CHOCOLATE, Color.BROWN};
     }
 
