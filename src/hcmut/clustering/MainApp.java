@@ -36,6 +36,7 @@ public class MainApp extends Application {
             this.mainCtrl.setStage(this.primaryStage);
             this.primaryStage.setTitle("Clustering App");
             this.primaryStage.setScene(new Scene(this.rootLayout));
+            this.primaryStage.setResizable(false);
             this.primaryStage.show();
         }
         catch (IOException e) {
