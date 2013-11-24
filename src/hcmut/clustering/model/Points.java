@@ -9,9 +9,15 @@ public class Points implements Iterable<Point> {
     /** Points list **/
 	private ArrayList<Point> points;
 
+    private double max_x;
+
+    private double max_y;
+
     /** Default Constructor **/
 	public Points() {
 		this.points = new ArrayList<Point>();
+        this.max_x = 0;
+        this.max_y = 0;
 	}
 
     /**
@@ -19,11 +25,29 @@ public class Points implements Iterable<Point> {
      * @param data
      */
 	public Points(Instances data) {
-		this.points = new ArrayList<Point>();
-		
-		for (int i = 0; i < data.numInstances(); i++)
-			this.points.add(new Point(data.instance(i)));
-	}
+        this();
+		for (int i = 0; i < data.numInstances(); i++) {
+            Point point = new Point(data.instance(i));
+            this.points.add(point);
+            double x = point.getAttribute(0);
+            double y = point.getAttribute(1);
+            if (this.max_x < x)
+                this.max_x = x;
+            if (this.max_y < y)
+                this.max_y = y;
+        }
+    }
+
+    /**
+     * Get maximum value of x and y
+     * @return maximum coordinate value
+     */
+    public double getMaxCoordinateValue() {
+        if (this.max_x > this.max_y)
+            return this.max_x;
+        else
+            return this.max_y;
+    }
 
     /**
      * Get point at index

@@ -6,22 +6,23 @@ import hcmut.clustering.model.Point;
 import hcmut.clustering.model.Points;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
 
 public class GraphController {
     private Color[] colorArray;
-    private GraphicsContext gc;
+    private GraphicsContext graphicsContext;
     private int size;
+
+    //TODO: cai nay co can thiet phai la int ko? t cho double dc hem?
     private int maxValue;
 
-    public GraphController(GraphicsContext gc) {
-        this.gc = gc;
+    public GraphController(GraphicsContext graphicsContext) {
+        this.graphicsContext = graphicsContext;
         colorArray = new Color[] {Color.RED, Color.DARKORANGE, Color.LIGHTYELLOW, Color.DARKGREEN,
                                   Color.DEEPSKYBLUE, Color.DARKVIOLET, Color.AQUA, Color.CHOCOLATE, Color.BROWN};
     }
 
-    public GraphController(GraphicsContext gc, int size, int maxValue) {
-        this(gc);
+    public GraphController(GraphicsContext graphicsContext, int size, int maxValue) {
+        this(graphicsContext);
         this.size = size;
         this.maxValue = maxValue;
     }
@@ -30,64 +31,78 @@ public class GraphController {
         this.maxValue = max;
     }
 
-    public void drawTest() {
-        gc.setFill(Color.GREEN);
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(5);
-        gc.strokeLine(40, 10, 10, 40);
-        gc.fillOval(15, 15, 30, 30);
-        gc.strokeOval(60, 60, 30, 30);
-        gc.fillRoundRect(110, 60, 30, 30, 10, 10);
-        gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
-        gc.fillArc(10, 110, 30, 30, 45, 240, ArcType.OPEN);
-        gc.fillArc(60, 110, 30, 30, 45, 240, ArcType.CHORD);
-        gc.fillArc(110, 110, 30, 30, 45, 240, ArcType.ROUND);
-        gc.strokeArc(10, 160, 30, 30, 45, 240, ArcType.OPEN);
-        gc.strokeArc(60, 160, 30, 30, 45, 240, ArcType.CHORD);
-        gc.strokeArc(110, 160, 30, 30, 45, 240, ArcType.ROUND);
-        gc.fillPolygon(new double[]{10, 40, 10, 40},
-                new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolygon(new double[]{60, 90, 60, 90},
-                new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolyline(new double[]{110, 140, 110, 140},
-                new double[]{210, 210, 240, 240}, 4);
+    /**
+     * Draw single point by coordinate
+     * @param x
+     * @param y
+     */
+    private void drawPoint(double x, double y) {
+        graphicsContext.fillOval(x, y, 5, 5);
     }
 
-    private void drawPoint(int x, int y) {
-        gc.fillOval(x, y, 5, 5);
-    }
-
-    public void draw(Point p) {
-        gc.setFill(Color.BLACK);
-        int x = ((int) p.getAttribute(0) * size / maxValue);
-        int y = size - ((int) p.getAttribute(1) * size / maxValue);
+    /**
+     * Draw object Point by converting its attributes to coordinate
+     * @param point
+     * @param color
+     */
+    public void draw(Point point, Color color) {
+        if (color == null)
+            graphicsContext.setFill(Color.BLACK);
+        else
+            graphicsContext.setFill(color);
+        double x = ((double) point.getAttribute(0) * size / maxValue);
+        double y = size - ((double) point.getAttribute(1) * size / maxValue);
         this.drawPoint(x, y);
     }
 
+    /**
+     * Draw list of Points
+     * @param points
+     * @param color
+     */
     public void draw(Points points, Color color) {
-        gc.setFill(color);
-        int x, y;
-        for (Point p : points) {
-            x = (int) p.getAttribute(0) * size / maxValue;
-            y = size - (int) p.getAttribute(1) * size / maxValue;
+        if (color == null)
+            graphicsContext.setFill(Color.BLACK);
+        else
+            graphicsContext.setFill(color);
+        double x, y;
+        for (Point point : points) {
+            x = point.getAttribute(0) * size / maxValue;
+            y = size -  point.getAttribute(1) * size / maxValue;
             this.drawPoint(x, y);
         }
     }
 
+    /**
+     * Draw a single Cluster
+     * @param cluster
+     * @param color
+     */
     public void draw(Cluster cluster, Color color) {
-        Points p = cluster.getPoints();
-        this.draw(p, color);
+        Points points = cluster.getPoints();
+        this.draw(points, color);
     }
 
-    public void drawCluster(Clusters clusters) {
-        int i = 0;
-        Color c;
+    /**
+     * Draw list of Cluster
+     * @param clusters
+     */
+    public void draw(Clusters clusters) {
+        int index = 0;
+        Color color;
         for (Cluster cluster : clusters) {
-            c = colorArray[i];
-            this.draw(cluster, c);
-            i++;
-            if (i == colorArray.length)
-                i =0;
+            color = colorArray[index];
+            this.draw(cluster, color);
+            index++;
+            if (index == colorArray.length)
+                index = 0;
         }
+    }
+
+    /**
+     * Clear drawing section
+     */
+    public void clearScreen() {
+    // TODO: clear drawing section
     }
 }

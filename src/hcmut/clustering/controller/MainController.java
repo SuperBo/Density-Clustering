@@ -14,8 +14,10 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class MainController {
+
     private static int DBSCAN_INDEX = 0;
     private static int OPTICS_INDEX = 1;
+
     private Points points;
 
     private Stage primaryStage;
@@ -66,8 +68,12 @@ public class MainController {
             if (file != null) {
                 this.inputFilePath.setText(file.getPath());
                 this.points = ReadData.readData(file.getPath());
+
+                //TODO: m coi lai cai cho chuyen tu max value sang toa do diem, t phai set the nao thi may diem do moi nam giua?
+                this.graphCtrl.setMaxValue((int) this.points.getMaxCoordinateValue());
+
                 this.numPoints.setText(Integer.toString(this.points.size()));
-                btnConfirmDataSet.setDisable(false);
+                this.btnConfirmDataSet.setDisable(false);
             }
         }
         catch (Exception e) {
@@ -79,25 +85,25 @@ public class MainController {
      * Click event handler for Confirm Data Set button
      */
     public void btnConfirmDataSetClicked() {
-        //TODO: Draw all points of data set
-        btnConfirmAlgorithm.setDisable(false);
-        btnConfirmDataSet.setDisable(true);
+        this.btnConfirmAlgorithm.setDisable(false);
+        this.btnConfirmDataSet.setDisable(true);
+        this.graphCtrl.draw(this.points, null);
     }
 
     /**
      * Click event handler for Confirm Algorithm button
      */
     public void btnConfirmAlgorithmClicked() {
-        btnConfirmParameters.setDisable(false);
-        btnConfirmAlgorithm.setDisable(true);
+        this.btnConfirmParameters.setDisable(false);
+        this.btnConfirmAlgorithm.setDisable(true);
     }
 
     /**
      * Click event handler for Confirm Parameters button
      */
     public void btnConfirmParametersClicked() {
-        btnConstructClusters.setDisable(false);
-        btnConfirmParameters.setDisable(true);
+        this.btnConstructClusters.setDisable(false);
+        this.btnConfirmParameters.setDisable(true);
     }
 
     /**
@@ -107,7 +113,7 @@ public class MainController {
         try {
             constructCluster(ReadData.readData(inputFilePath.getText()), Double.parseDouble(inputEps.getText()),
                     Integer.parseInt(inputMinPts.getText()), chbAlgorithm.getSelectionModel().getSelectedIndex());
-            btnConstructClusters.setDisable(true);
+            this.btnConstructClusters.setDisable(true);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -118,14 +124,15 @@ public class MainController {
      * Click event handler for Start Over button
      */
     public void btnStartOverClicked() {
-        inputFilePath.setText("");
-        inputMinPts.setText("");
-        inputEps.setText("");
-        chbAlgorithm.getSelectionModel().clearSelection();
-        btnConfirmDataSet.setDisable(false);
-        btnConfirmAlgorithm.setDisable(true);
-        btnConfirmParameters.setDisable(true);
-        btnConstructClusters.setDisable(true);
+        this.inputFilePath.setText(null);
+        this.inputMinPts.setText(null);
+        this.inputEps.setText(null);
+        this.numPoints.setText(null);
+        this.chbAlgorithm.getSelectionModel().clearSelection();
+        this.btnConfirmDataSet.setDisable(false);
+        this.btnConfirmAlgorithm.setDisable(true);
+        this.btnConfirmParameters.setDisable(true);
+        this.btnConstructClusters.setDisable(true);
     }
 
     /**
@@ -139,9 +146,8 @@ public class MainController {
         if (algorithm == DBSCAN_INDEX) {
             DBSCAN dbscan = new DBSCAN(points, eps, minPts);
             dbscan.constructCluster();
-            dbscan.getClusters();
-            //TODO Draw Clusters
-            this.graphCtrl.drawTest();
+            this.graphCtrl.draw(dbscan.getClusters());
+            System.out.println(dbscan.getClusters().size());
         }
         else if (algorithm == OPTICS_INDEX) {
             OPTICS optics = new OPTICS(points, eps, minPts);
