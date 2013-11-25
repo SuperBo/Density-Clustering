@@ -16,8 +16,10 @@ public class GraphController {
 
     public GraphController(GraphicsContext graphicsContext) {
         this.graphicsContext = graphicsContext;
-        colorArray = new Color[] {Color.RED, Color.DARKORANGE, Color.DARKGOLDENROD, Color.DARKGREEN,
-                                  Color.DEEPSKYBLUE, Color.DARKVIOLET, Color.AQUA, Color.CHOCOLATE, Color.BROWN};
+        colorArray = new Color[] {Color.RED, Color.DARKORANGE, Color.YELLOW, Color.DARKGREEN, Color.FIREBRICK,
+                                  Color.DEEPSKYBLUE, Color.DARKVIOLET, Color.AQUA, Color.CHOCOLATE, Color.BROWN,
+                                  Color.ALICEBLUE, Color.ORANGERED, Color.AZURE, Color.BURLYWOOD, Color.DARKSALMON,
+                                  Color.LIGHTCYAN, Color.LIGHTCORAL, Color.HOTPINK, Color.MAGENTA};
     }
 
     public GraphController(GraphicsContext graphicsContext, int size, int maxValue) {
@@ -50,8 +52,8 @@ public class GraphController {
             graphicsContext.setFill(Color.BLACK);
         else
             graphicsContext.setFill(color);
-        double x = ((double) point.getAttribute(0) * size / maxValue);
-        double y = size - ((double) point.getAttribute(1) * size / maxValue);
+        double x = 5 + ((double) point.getAttribute(0) * (size - 10) / maxValue);
+        double y = size - 5 - ((double) point.getAttribute(1) * (size - 10) / maxValue);
         this.drawPoint(x, y);
     }
 
@@ -67,8 +69,8 @@ public class GraphController {
             graphicsContext.setFill(color);
         double x, y;
         for (Point point : points) {
-            x = point.getAttribute(0) * size / maxValue;
-            y = size -  point.getAttribute(1) * size / maxValue;
+            x = 5 +  point.getAttribute(0) * (size - 10) / maxValue;
+            y = size - 5 -  point.getAttribute(1) * (size - 10) / maxValue;
             this.drawPoint(x, y);
         }
     }

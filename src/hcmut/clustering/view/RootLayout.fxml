@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.lang.String?>
-<?import javafx.collections.*?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.chart.*?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
-
+<?import java.lang.String?>
 <BorderPane disable="false" prefHeight="800.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="hcmut.clustering.controller.MainController">
   <bottom>
     <ToolBar>
@@ -23,9 +19,9 @@
   <center>
     <BorderPane prefHeight="200.0" prefWidth="200.0">
       <bottom>
-        <LineChart id="LineChart" fx:id="lineChart" alternativeColumnFillVisible="false" alternativeRowFillVisible="true" animated="true" createSymbols="true" disable="false" focusTraversable="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" minHeight="49.999900000002526" prefHeight="145.0" prefWidth="500.0" verticalGridLinesVisible="true" verticalZeroLineVisible="true" visible="true">
+        <LineChart fx:id="lineChart" alternativeColumnFillVisible="false" alternativeRowFillVisible="true" animated="true" createSymbols="true" disable="false" focusTraversable="false" horizontalGridLinesVisible="false" horizontalZeroLineVisible="false" minHeight="50.0" prefHeight="145.0" prefWidth="500.0" verticalGridLinesVisible="true" verticalZeroLineVisible="true" visible="true">
           <xAxis>
-            <CategoryAxis side="BOTTOM" />
+            <NumberAxis side="BOTTOM" />
           </xAxis>
           <yAxis>
             <NumberAxis side="LEFT" />
@@ -170,7 +166,7 @@
         </Separator>
         <Label font="$x1" text="Evaluate">
           <VBox.margin>
-            <Insets top="10.0" fx:id="x3" />
+            <Insets top="10.0" fx:id="x16" />
           </VBox.margin>
         </Label>
         <HBox id="HBox" alignment="CENTER_RIGHT" padding="$x3" spacing="5.0">
@@ -191,7 +187,11 @@
             <TextField fx:id="inputPrefEps" disable="true" prefWidth="117.0" />
           </children>
         </HBox>
-        <Button id="btnConfirmDataset" fx:id="btnConfirmOPTICSControl" cancelButton="false" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#btnConfirmOPTICSControlClicked" text="Confirm" wrapText="false" VBox.margin="$x3" />
+        <Button id="btnConfirmDataset" fx:id="btnConfirmOPTICSControl" cancelButton="false" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#btnConfirmOPTICSControlClicked" text="Confirm" wrapText="false">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x16" />
+          </VBox.margin>
+        </Button>
         <Separator prefWidth="200.0" VBox.margin="$x3" />
       </children>
       <padding>

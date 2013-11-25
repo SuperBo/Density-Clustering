@@ -1,5 +1,6 @@
 package hcmut.clustering;
 
+import hcmut.clustering.controller.ChartController;
 import hcmut.clustering.controller.GraphController;
 import hcmut.clustering.controller.MainController;
 import javafx.application.Application;
@@ -47,11 +48,13 @@ public class MainApp extends Application {
     }
 
     private void showGraphics() {
-        Canvas canvas = new Canvas(600, 600);
-        GraphController gc = new GraphController(canvas.getGraphicsContext2D(), 600, 100);
+        Canvas canvas = new Canvas(550, 550);
+        GraphController gc = new GraphController(canvas.getGraphicsContext2D(), 550, 100);
         mainCtrl.setGraphController(gc);
 
         ((BorderPane) this.rootLayout.getCenter()).setCenter(canvas);
+        ChartController chartCtrl = new ChartController();
+        mainCtrl.setChartController(chartCtrl);
     }
 
 }

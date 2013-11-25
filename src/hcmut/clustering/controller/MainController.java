@@ -2,6 +2,7 @@ package hcmut.clustering.controller;
 
 import hcmut.clustering.engine.DBSCAN;
 import hcmut.clustering.engine.OPTICS;
+import hcmut.clustering.model.Point;
 import hcmut.clustering.model.Points;
 import hcmut.clustering.utility.ReadData;
 import javafx.fxml.FXML;
@@ -24,6 +25,7 @@ public class MainController {
     private Stage primaryStage;
 
     private GraphController graphController;
+    private ChartController chartController;
 
     private DBSCAN dbscan;
 
@@ -52,7 +54,7 @@ public class MainController {
     @FXML
     private Button btnConfirmOPTICSControl;
     @FXML
-    private LineChart lineChart;
+    private LineChart<Integer, Double> lineChart;
     @FXML
     private TextField outputEvaluation;
 
@@ -67,6 +69,10 @@ public class MainController {
 
     public void setGraphController(GraphController graphController) {
         this.graphController = graphController;
+    }
+
+    public void setChartController(ChartController charCtrl) {
+        this.chartController = charCtrl;
     }
 
     /**
@@ -167,11 +173,12 @@ public class MainController {
         this.graphController.clearScreen();
     }
 
-    /**
-     * Click event handler for Control OPTICS confirm button clicked
-     */
     public void btnConfirmOPTICSControlClicked() {
-        this.graphController.draw(optics.getClusters(Double.parseDouble(inputPrefEps.getText())));
+        if (inputPrefEps.getText() == null || inputEps.getText().compareTo("") == 0)
+            return;
+        double prefValue = Double.parseDouble(inputPrefEps.getText());
+        this.graphController.draw(optics.getClusters(prefValue));
+        chartController.drawPrefLine(prefValue);
     }
 
     /**
@@ -191,8 +198,13 @@ public class MainController {
             optics.setArguments(points, eps, minPts);
             optics.constructClusters();
 
-            //TODO: draw ordered list computed by OPTICS engine to chart
-            optics.getOrderedList();
+            chartController.setLineChart(lineChart);
+            chartController.draw(optics.getOrderedList());
+
+            //Debug
+            for (Point point: optics.getOrderedList()) {
+                System.out.println("(" + point.getAttribute(0) + "," + point.getAttribute(1) + "):" + point.getReachDist());
+            }
         }
     }
 }
