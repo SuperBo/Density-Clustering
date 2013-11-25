@@ -2,26 +2,22 @@ package hcmut.clustering.controller;
 
 import hcmut.clustering.engine.DBSCAN;
 import hcmut.clustering.engine.OPTICS;
-import hcmut.clustering.model.Cluster;
 import hcmut.clustering.model.Points;
-import hcmut.clustering.model.Point;
 import hcmut.clustering.utility.ReadData;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
-import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import java.util.ArrayList;
 
 public class MainController {
 
-    private static int DBSCAN_INDEX = 0;
-    private static int OPTICS_INDEX = 1;
+    private static final int DBSCAN_INDEX = 0;
+    private static final int OPTICS_INDEX = 1;
 
     private Points points;
 
@@ -106,7 +102,8 @@ public class MainController {
         this.btnConfirmAlgorithm.setDisable(true);
 
         if (chbAlgorithm.getSelectionModel().getSelectedIndex() == OPTICS_INDEX) {
-
+            inputPrefEps.setDisable(false);
+            btnConfirmOPTICSControl.setDisable(false);
         }
     }
 
@@ -134,7 +131,9 @@ public class MainController {
             constructCluster(ReadData.readData(inputFilePath.getText()), Double.parseDouble(inputEps.getText()),
                     Integer.parseInt(inputMinPts.getText()), chbAlgorithm.getSelectionModel().getSelectedIndex());
             this.btnConstructClusters.setDisable(true);
-            this.btnConfirmOPTICSControl.setDisable(false);
+
+            if (chbAlgorithm.getSelectionModel().getSelectedIndex() == OPTICS_INDEX)
+                this.btnConfirmOPTICSControl.setDisable(false);
 
             //TODO: write evaluation function
             outputEvaluation.setText("");
@@ -168,15 +167,11 @@ public class MainController {
         this.graphController.clearScreen();
     }
 
+    /**
+     * Click event handler for Control OPTICS confirm button clicked
+     */
     public void btnConfirmOPTICSControlClicked() {
-//        this.graphController.draw(optics.getClusters(Double.parseDouble(inputPrefEps.getText())));
-        System.out.println("Prefer eps: " + Double.parseDouble(inputPrefEps.getText()));
-        for (Cluster cluster: optics.getClusters(Double.parseDouble(inputPrefEps.getText()))) {
-            for (Point point: cluster.getPoints()) {
-                System.out.print("(" + point.getAttribute(0) + "," + point.getAttribute(1) + ")");
-            }
-            System.out.println();
-        }
+        this.graphController.draw(optics.getClusters(Double.parseDouble(inputPrefEps.getText())));
     }
 
     /**
@@ -198,11 +193,6 @@ public class MainController {
 
             //TODO: draw ordered list computed by OPTICS engine to chart
             optics.getOrderedList();
-
-            //Debug
-            for (Point point: optics.getOrderedList()) {
-                System.out.println("(" + point.getAttribute(0) + "," + point.getAttribute(1) + "):" + point.getReachDist());
-            }
         }
     }
 }

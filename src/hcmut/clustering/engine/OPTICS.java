@@ -59,6 +59,11 @@ public class OPTICS {
         return orderedList;
     }
 
+    /**
+     * Extract cluster from
+     * @param eps
+     * @return
+     */
     public Clusters getClusters(double eps) {
         Clusters clusters = new Clusters();
 
@@ -66,10 +71,13 @@ public class OPTICS {
 
         for (Point point: orderedList) {
             if (point.getReachDist() <= eps) {
-                points.add(point);
+                tmp.add(point);
             }
-            else if (points.size() != 0) {
+            else if (tmp.size() >= minPts) {
                 clusters.addCluster(new Cluster(tmp));
+                tmp.clear();
+            }
+            else {
                 tmp.clear();
             }
         }

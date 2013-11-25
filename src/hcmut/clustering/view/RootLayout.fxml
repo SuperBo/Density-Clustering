@@ -188,7 +188,7 @@
                 <Insets right="5.0" />
               </HBox.margin>
             </Label>
-            <TextField fx:id="inputPrefEps" prefWidth="117.0" />
+            <TextField fx:id="inputPrefEps" disable="true" prefWidth="117.0" />
           </children>
         </HBox>
         <Button id="btnConfirmDataset" fx:id="btnConfirmOPTICSControl" cancelButton="false" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#btnConfirmOPTICSControlClicked" text="Confirm" wrapText="false" VBox.margin="$x3" />
