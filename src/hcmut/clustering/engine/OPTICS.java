@@ -1,5 +1,6 @@
 package hcmut.clustering.engine;
 
+import hcmut.clustering.model.Cluster;
 import hcmut.clustering.model.Clusters;
 import hcmut.clustering.model.Point;
 import hcmut.clustering.model.Points;
@@ -16,13 +17,14 @@ public class OPTICS {
     private Points points;
     private double eps;
     private int minPts;
-    private Clusters clusters;
     private ArrayList<Point> orderedList;
 
     /**
      * Default Constructor
      */
-    public OPTICS() {}
+    public OPTICS() {
+        orderedList = new ArrayList<Point>();
+    }
 
     /**
      * Constructor
@@ -31,11 +33,22 @@ public class OPTICS {
      * @param minPts
      */
     public OPTICS(Points points, double eps, int minPts) {
+        this();
         this.points = points;
         this.eps = eps;
         this.minPts = minPts;
-        this.clusters = new Clusters();
-        orderedList = new ArrayList<Point>();
+    }
+
+    /**
+     * Set arguments of OPTICS engine
+     * @param points
+     * @param eps
+     * @param minPts
+     */
+    public void setArguments(Points points, double eps, int minPts) {
+        this.points = points;
+        this.eps = eps;
+        this.minPts = minPts;
     }
 
     /**
@@ -44,6 +57,27 @@ public class OPTICS {
      */
     public ArrayList<Point> getOrderedList() {
         return orderedList;
+    }
+
+    public Clusters getClusters(double eps) {
+        Clusters clusters = new Clusters();
+
+        Points tmp = new Points();
+
+        for (Point point: orderedList) {
+            if (point.getReachDist() <= eps) {
+                points.add(point);
+            }
+            else if (points.size() != 0) {
+                clusters.addCluster(new Cluster(tmp));
+                tmp.clear();
+            }
+        }
+
+        if (tmp.size() != 0)
+            clusters.addCluster(new Cluster(tmp));
+
+        return clusters;
     }
 
     /**
@@ -77,13 +111,6 @@ public class OPTICS {
                     update(point, neighbors, seeds);
                     while (!seeds.isEmpty()) {
                         Point tmp = seeds.poll();
-
-//                        //TODO: debug
-//                        System.out.println(seeds.size() + ":(" + tmp.getAttribute(0) + "," + tmp.getAttribute(1) + "):" + tmp.getReachDist());
-//                        if (seeds.peek() != null) {
-//                            System.out.println(seeds.peek().getReachDist());
-//                        }
-
                         Points tmpNeighbors = tmp.regionQuery(eps, points);
                         tmp.setVisited(true);
                         orderedList.add(tmp);
@@ -104,7 +131,8 @@ public class OPTICS {
      */
     private void update(Point core, Points neighbors, PriorityQueue<Point> seeds) {
         double coreDist = coreDistance(core, neighbors);
-        core.setReachDist(coreDist);
+        if (core.getReachDist() == 0)
+            core.setReachDist(coreDist);
 
         for (Point point: neighbors) {
             if (!point.isVisited()) {
@@ -114,7 +142,9 @@ public class OPTICS {
                     seeds.add(point);
                 }
                 else if (point.getReachDist() > newReachDist) {
+                    seeds.remove(point);
                     point.setReachDist(newReachDist);
+                    seeds.add(point);
                 }
             }
         }

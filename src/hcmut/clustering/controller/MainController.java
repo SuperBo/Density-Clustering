@@ -2,6 +2,7 @@ package hcmut.clustering.controller;
 
 import hcmut.clustering.engine.DBSCAN;
 import hcmut.clustering.engine.OPTICS;
+import hcmut.clustering.model.Cluster;
 import hcmut.clustering.model.Points;
 import hcmut.clustering.model.Point;
 import hcmut.clustering.utility.ReadData;
@@ -28,6 +29,10 @@ public class MainController {
 
     private GraphController graphController;
 
+    private DBSCAN dbscan;
+
+    private OPTICS optics;
+
     @FXML
     private TextField inputFilePath;
     @FXML
@@ -36,6 +41,8 @@ public class MainController {
     private TextField inputEps;
     @FXML
     private TextField inputMinPts;
+    @FXML
+    private TextField inputPrefEps;
     @FXML
     private TextField numPoints;
     @FXML
@@ -47,9 +54,15 @@ public class MainController {
     @FXML
     private Button btnConstructClusters;
     @FXML
+    private Button btnConfirmOPTICSControl;
+    @FXML
     private LineChart lineChart;
+    @FXML
+    private TextField outputEvaluation;
 
     public MainController() {
+        dbscan = new DBSCAN();
+        optics = new OPTICS();
     }
 
     public void setStage(Stage stage) {
@@ -121,6 +134,10 @@ public class MainController {
             constructCluster(ReadData.readData(inputFilePath.getText()), Double.parseDouble(inputEps.getText()),
                     Integer.parseInt(inputMinPts.getText()), chbAlgorithm.getSelectionModel().getSelectedIndex());
             this.btnConstructClusters.setDisable(true);
+            this.btnConfirmOPTICSControl.setDisable(false);
+
+            //TODO: write evaluation function
+            outputEvaluation.setText("");
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -135,17 +152,31 @@ public class MainController {
         this.inputFilePath.setText(null);
         this.inputMinPts.setText(null);
         this.inputEps.setText(null);
+        this.inputPrefEps.setText(null);
         this.numPoints.setText(null);
         this.chbAlgorithm.getSelectionModel().clearSelection();
+        this.outputEvaluation.setText(null);
 
         //Reset buttons
         this.btnConfirmDataSet.setDisable(false);
         this.btnConfirmAlgorithm.setDisable(false);
         this.btnConfirmParameters.setDisable(false);
+        this.btnConfirmOPTICSControl.setDisable(true);
         this.btnConstructClusters.setDisable(true);
 
         //Clear drawing section
         this.graphController.clearScreen();
+    }
+
+    public void btnConfirmOPTICSControlClicked() {
+//        this.graphController.draw(optics.getClusters(Double.parseDouble(inputPrefEps.getText())));
+        System.out.println("Prefer eps: " + Double.parseDouble(inputPrefEps.getText()));
+        for (Cluster cluster: optics.getClusters(Double.parseDouble(inputPrefEps.getText()))) {
+            for (Point point: cluster.getPoints()) {
+                System.out.print("(" + point.getAttribute(0) + "," + point.getAttribute(1) + ")");
+            }
+            System.out.println();
+        }
     }
 
     /**
@@ -157,15 +188,19 @@ public class MainController {
      */
     public void constructCluster(Points points, double eps, int minPts, int algorithm) {
         if (algorithm == DBSCAN_INDEX) {
-            DBSCAN dbscan = new DBSCAN(points, eps, minPts);
+            dbscan.setArguments(points, eps, minPts);
             dbscan.constructCluster();
             this.graphController.draw(dbscan.getClusters());
         }
         else if (algorithm == OPTICS_INDEX) {
-            OPTICS optics = new OPTICS(points, eps, minPts);
+            optics.setArguments(points, eps, minPts);
             optics.constructClusters();
-            ArrayList<Point> orderedList = optics.getOrderedList();
-            for (Point point: orderedList) {
+
+            //TODO: draw ordered list computed by OPTICS engine to chart
+            optics.getOrderedList();
+
+            //Debug
+            for (Point point: optics.getOrderedList()) {
                 System.out.println("(" + point.getAttribute(0) + "," + point.getAttribute(1) + "):" + point.getReachDist());
             }
         }

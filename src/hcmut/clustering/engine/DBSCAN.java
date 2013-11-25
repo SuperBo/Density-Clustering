@@ -19,6 +19,7 @@ public class DBSCAN {
      * Default constructor
      */
     public DBSCAN() {
+        clusters = new Clusters();
     }
 
     /**
@@ -28,10 +29,22 @@ public class DBSCAN {
      * @param minPts
      */
     public DBSCAN(Points points, double eps, int minPts) {
+        this();
         this.eps = eps;
         this.minPts = minPts;
         this.points = points;
-        clusters = new Clusters();
+    }
+
+    /**
+     * Set arguments of DBSCAN engine
+     * @param points
+     * @param eps
+     * @param minPts
+     */
+    public void setArguments(Points points, double eps, int minPts) {
+        this.eps = eps;
+        this.minPts = minPts;
+        this.points = points;
     }
 
     /**

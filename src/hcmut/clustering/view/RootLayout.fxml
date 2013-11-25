@@ -168,6 +168,31 @@
             <Insets top="10.0" fx:id="x2" />
           </VBox.margin>
         </Separator>
+        <Label font="$x1" text="Evaluate">
+          <VBox.margin>
+            <Insets top="10.0" fx:id="x3" />
+          </VBox.margin>
+        </Label>
+        <HBox id="HBox" alignment="CENTER_RIGHT" padding="$x3" spacing="5.0">
+          <children>
+            <Label text="Result" />
+            <TextField id="ouputEvaluation" fx:id="outputEvaluation" editable="false" prefWidth="117.0" />
+          </children>
+        </HBox>
+        <Separator prefWidth="200.0" VBox.margin="$x3" />
+        <Label font="$x1" text="OPTICS Control" VBox.margin="$x3" />
+        <HBox alignment="CENTER_RIGHT" padding="$x3" prefHeight="32.0" prefWidth="180.0">
+          <children>
+            <Label alignment="CENTER_RIGHT" prefWidth="63.0" text="Pref eps">
+              <HBox.margin>
+                <Insets right="5.0" />
+              </HBox.margin>
+            </Label>
+            <TextField fx:id="inputPrefEps" prefWidth="117.0" />
+          </children>
+        </HBox>
+        <Button id="btnConfirmDataset" fx:id="btnConfirmOPTICSControl" cancelButton="false" defaultButton="true" disable="true" mnemonicParsing="false" onMouseClicked="#btnConfirmOPTICSControlClicked" text="Confirm" wrapText="false" VBox.margin="$x3" />
+        <Separator prefWidth="200.0" VBox.margin="$x3" />
       </children>
       <padding>
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
