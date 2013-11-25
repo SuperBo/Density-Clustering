@@ -3,8 +3,10 @@ package hcmut.clustering.controller;
 import hcmut.clustering.engine.DBSCAN;
 import hcmut.clustering.engine.OPTICS;
 import hcmut.clustering.model.Points;
+import hcmut.clustering.model.Point;
 import hcmut.clustering.utility.ReadData;
 import javafx.fxml.FXML;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -12,6 +14,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class MainController {
 
@@ -21,7 +24,8 @@ public class MainController {
     private Points points;
 
     private Stage primaryStage;
-    private GraphController graphCtrl;
+
+    private GraphController graphController;
 
     @FXML
     private TextField inputFilePath;
@@ -41,17 +45,18 @@ public class MainController {
     private Button btnConfirmParameters;
     @FXML
     private Button btnConstructClusters;
+    @FXML
+    private LineChart lineChart;
 
     public MainController() {
-
     }
 
     public void setStage(Stage stage) {
         this.primaryStage = stage;
     }
 
-    public void setGraphCtrl(GraphController graphController) {
-        this.graphCtrl = graphController;
+    public void setGraphController(GraphController graphController) {
+        this.graphController = graphController;
     }
 
     /**
@@ -69,8 +74,7 @@ public class MainController {
                 this.inputFilePath.setText(file.getPath());
                 this.points = ReadData.readData(file.getPath());
 
-                //TODO: tai cai tap du lieu no le ra diem 124,7 may sua lai thanh 12,7 thi no se nam giua :v?
-                this.graphCtrl.setMaxValue((int) this.points.getMaxCoordinateValue());
+                this.graphController.setMaxValue(this.points.getMaxCoordinateValue());
 
                 this.numPoints.setText(Integer.toString(this.points.size()));
                 this.btnConfirmDataSet.setDisable(false);
@@ -82,20 +86,22 @@ public class MainController {
     }
 
     /**
-     * Click event handler for Confirm Data Set button
-     */
-    public void btnConfirmDataSetClicked() {
-        this.btnConfirmAlgorithm.setDisable(false);
-        this.btnConfirmDataSet.setDisable(true);
-        this.graphCtrl.draw(this.points, null);
-    }
-
-    /**
      * Click event handler for Confirm Algorithm button
      */
     public void btnConfirmAlgorithmClicked() {
-        this.btnConfirmParameters.setDisable(false);
         this.btnConfirmAlgorithm.setDisable(true);
+
+        if (chbAlgorithm.getSelectionModel().getSelectedIndex() == OPTICS_INDEX) {
+
+        }
+    }
+
+    /**
+     * Click event handler for Confirm Data Set button
+     */
+    public void btnConfirmDataSetClicked() {
+        this.btnConfirmDataSet.setDisable(true);
+        this.graphController.draw(this.points, null);
     }
 
     /**
@@ -133,12 +139,12 @@ public class MainController {
 
         //Reset buttons
         this.btnConfirmDataSet.setDisable(false);
-        this.btnConfirmAlgorithm.setDisable(true);
-        this.btnConfirmParameters.setDisable(true);
+        this.btnConfirmAlgorithm.setDisable(false);
+        this.btnConfirmParameters.setDisable(false);
         this.btnConstructClusters.setDisable(true);
 
         //Clear drawing section
-        this.graphCtrl.clearScreen();
+        this.graphController.clearScreen();
     }
 
     /**
@@ -152,12 +158,15 @@ public class MainController {
         if (algorithm == DBSCAN_INDEX) {
             DBSCAN dbscan = new DBSCAN(points, eps, minPts);
             dbscan.constructCluster();
-            this.graphCtrl.draw(dbscan.getClusters());
-            System.out.println(dbscan.getClusters().size());
+            this.graphController.draw(dbscan.getClusters());
         }
         else if (algorithm == OPTICS_INDEX) {
             OPTICS optics = new OPTICS(points, eps, minPts);
             optics.constructClusters();
+            ArrayList<Point> orderedList = optics.getOrderedList();
+            for (Point point: orderedList) {
+                System.out.println("(" + point.getAttribute(0) + "," + point.getAttribute(1) + "):" + point.getReachDist());
+            }
         }
     }
 }

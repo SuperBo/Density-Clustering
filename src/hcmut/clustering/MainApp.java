@@ -32,8 +32,10 @@ public class MainApp extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("view/RootLayout.fxml"));
             this.rootLayout = (BorderPane) loader.load();
+
             this.mainCtrl = loader.getController();
             this.mainCtrl.setStage(this.primaryStage);
+
             this.primaryStage.setTitle("Clustering App");
             this.primaryStage.setScene(new Scene(this.rootLayout));
             this.primaryStage.setResizable(false);
@@ -45,10 +47,11 @@ public class MainApp extends Application {
     }
 
     private void showGraphics() {
-        Canvas canvas = new Canvas(500, 500);
-        GraphController gc = new GraphController(canvas.getGraphicsContext2D(), 500, 100);
-        mainCtrl.setGraphCtrl(gc);
-        this.rootLayout.setCenter(canvas);
+        Canvas canvas = new Canvas(600, 600);
+        GraphController gc = new GraphController(canvas.getGraphicsContext2D(), 600, 100);
+        mainCtrl.setGraphController(gc);
+
+        ((BorderPane) this.rootLayout.getCenter()).setCenter(canvas);
     }
 
 }
